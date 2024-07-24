@@ -10,15 +10,24 @@ pip install -r requirements.txt
 ```
 
 Also, we assume that
+
 - gllvm
 - CIL
 - crown_harness_generator
 - crown_tc_generator
+
 are installed in ./tools.
 
 ## How to use
 
+Following features are supported.
+
+- unit prioritisation
+- unit fuzzing
+- system fuzzing
+- unit/system carving
+
 You can simply type help command to see its usage.
-```
+```bash
 python helper.py --help
 ```
