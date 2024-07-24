@@ -1,0 +1,63 @@
+#!/bin/bash
+
+set -e
+set -o xtrace
+
+git submodule update --init
+
+python3.8 -m venv .venv
+source .venv/bin/activate
+pip install -U pip
+pip install -r requirements.txt
+
+echo "Building base image"
+pushd ./assets
+bash build.sh
+popd
+
+echo "Building standalone LibFuzzer"
+pushd ./libfuzzer
+bash build.sh
+popd
+
+echo "Building AFL++"
+pushd ./tools/AFLplusplus
+make
+popd
+
+echo "Building carving"
+pushd ./tools/carving_llvm
+if [ ! -d "pin" ]; then
+    bash install_pin.sh
+fi
+make
+popd
+
+# echo "Building CIL"
+# pushd ./tools/CIL
+# opam init -a --dot-profile=$HOME/.env
+# eval $(opam env --switch=default)
+# opam switch -y create .
+# eval $(opam env)
+# dune build
+# popd
+
+echo "Building crown_harness_generator"
+pushd ./tools/crown_harness_generator
+make
+popd
+
+# echo "Building crown_tc_generator"
+# pushd ./tools/crown_tc_generator/src
+# make
+# make install
+# popd
+
+echo "Building print_function"
+pushd ./tools/print_function
+make
+popd
+
+echo "Building function_list"
+pushd ./tools/function_list
+popd

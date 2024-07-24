@@ -1,0 +1,57 @@
+#!/bin/bash
+sudo apt update
+apt-get install -y libzstd-dev liblz4-dev python-dev python3-dev \
+    python3.8-dev libpq-dev libc++-dev libpng-dev libwebp-dev libjpeg-dev libtiff-dev \
+    libjson-c-dev libpcap-dev sqlite3 libsqlite3-dev \
+    libopenjp2-7-dev \
+    g++ build-essential gcc-multilib g++-multilib \
+    python3.8 python3.8-venv
+
+
+snap install cmake --classic
+
+# Install go
+# Check if go command is available
+if command -v go &> /dev/null
+then
+    echo "Go is already installed"
+else
+    echo "Installing Go"
+    wget https://go.dev/dl/go1.21.5.linux-amd64.tar.gz -O /tmp/go.tar.gz
+    rm -rf /usr/local/go && tar -C /usr/local -xzf /tmp/go.tar.gz
+    echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.env
+fi
+
+
+source ~/.env
+
+# gllvm
+# Check if gllvm command is available
+if command -v "gclang" &> /dev/null
+then
+    echo "gllvm is already installed"
+else
+    echo "Installing gllvm"
+    GO111MODULE=off go get github.com/SRI-CSL/gllvm/cmd/...
+    echo export PATH=\$PATH:$(go env GOPATH)/bin >> ~/.env
+fi
+
+# # Install opam
+# # Check if opam command is available
+# if command -v opam &> /dev/null
+# then
+#     echo "opam is already installed"
+# else
+#     echo "Installing opam"
+#     echo | bash -c "sh <(curl -fsSL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)"
+# fi
+
+
+# CIL
+# ```bash
+# git clone git@github.com:3-24/CIL.git -b main
+# opam switch create .
+# eval $(opam env)
+# dune build
+# cp _opam/bin/cilly ~/bin
+# ```

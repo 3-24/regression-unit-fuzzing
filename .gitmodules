@@ -1,0 +1,27 @@
+[submodule "tools/print_function"]
+	path = tools/print_function
+	url = git@github.com:3-24/print_function.git
+	branch = main
+[submodule "tools/carving_llvm"]
+	path = tools/carving_llvm
+	url = git@github.com:LockOne/carving_llvm.git
+	branch = master
+[submodule "tools/CIL"]
+	path = tools/CIL
+	url = git@github.com:3-24/CIL.git
+	branch = stable
+[submodule "tools/crown_harness_generator"]
+	path = tools/crown_harness_generator
+	url = git@github.com:3-24/crown_harness_generator.git
+	branch = swtv
+[submodule "tools/crown_tc_generator"]
+	path = tools/crown_tc_generator
+	url = git@github.com:3-24/crown_tc_generator.git
+	branch = swtv
+[submodule "tools/AFLplusplus"]
+	path = tools/AFLplusplus
+	url = git@github.com:AFLplusplus/AFLplusplus.git
+	branch = stable
+[submodule "tools/function_list"]
+	path = tools/function_list
+	url = git@github.com:3-24/function_list_pass.git

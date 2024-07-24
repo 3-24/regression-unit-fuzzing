@@ -1,0 +1,123 @@
+[
+    {
+        "name": "picotls-13837",
+        "bic-before": "047cccf",
+        "bic-after": "7122ea3",
+        "sanitizer": "address",
+        "fuzzer": "fuzz-asn1",
+        "fuzzer-libs": [],
+        "changed-functions": ["LLVMFuzzerTestOneInput"],
+        "true-positive": ["ptls_asn1_read_type", "ptls_asn1_validation_recursive"],
+        "true-positive-loc": "lib/asn1.c:86:26"
+    },
+    {
+        "name": "curl-8000",
+        "bic-before": "e6c22368c6e5426ec2b1cb8a3041ebc98d0ad402",
+        "bic-after" : "dd7521bcc1b7a6fcb53c31f9bd1192fcc884bd56",
+        "sanitizer": "address",
+        "fuzzer": "curl_fuzzer",
+        "fuzzer-libs": ["-lpthread", "-lz"],
+        "changed-functions": [
+            "Curl_httpchunk_read",
+            "strcpy_url"
+        ],
+        "true-positive": ["strcpy_url", "concat_url", "Curl_follow"],
+        "true-positive-loc": "lib/transfer.c:1540:9"
+    },
+    {
+        "name": "file-30222",
+        "bic-before": "7cbc03a7c3df89d2e93f15ff9d4714f7757f4931",
+        "bic-after" : "6de3683de955277c4be4be350ec683b3203d3f31",
+        "sanitizer": "-fsanitize=array-bounds,bool,builtin,enum,float-divide-by-zero,function,integer-divide-by-zero,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,unsigned-integer-overflow,unreachable,vla-bound,vptr -fno-sanitize-recover=array-bounds,bool,builtin,enum,float-divide-by-zero,function,integer-divide-by-zero,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,unreachable,vla-bound,vptr",
+        "fuzzer": "magic_fuzzer",
+        "fuzzer-libs": [
+            "-llzma", "-lbz2", "-lz"
+        ],
+        "changed-functions": ["file_separator", "file_buffer", "trim_separator"],
+        "true-positive": ["trim_separator", "file_buffer"],
+        "true-positive-loc": "src/funcs.c:262:13"
+    },
+    {
+        "name": "leptonica-25212",
+        "bic-before": "46b8f565f244641b53090d1f06b633c7dc6d366b",
+        "bic-after": "8fc49016cf44ecbbab28979442e2781bd064584e",
+        "sanitizer": "address",
+        "fuzzer": "pix4_fuzzer",
+        "fuzzer-libs": ["-llzma", "-lopenjp2", "-lm",
+            "$WORK/lib/liblept.a", "$WORK/lib/libtiff.a",
+            "$WORK/lib/libwebp.a", "$WORK/lib/libpng.a", 
+            "$WORK/lib/libjpeg.a", "$WORK/lib/libjbig.a",
+            "$WORK/lib/libzstd.a", "$WORK/lib/libz.a"
+        ],
+        "changed-functions": ["pixGetBinnedColor"],
+        "true-positive": ["pixGetBinnedComponentRange"],
+        "true-positive-loc": "src/pix4.c:2536:22"
+    },
+    {
+        "name": "libgit2-11382",
+        "bic-before": "f647bbc",
+        "bic-after": "7fafec0",
+        "sanitizer": "address",
+        "fuzzer": "objects_fuzzer",
+        "fuzzer-libs": ["$WORK/lib/libgit2.a", "-lpthread"],
+        "changed-functions": ["parse_mode"],
+        "true-positive": ["git__strntol64", "git__strntol32"],
+        "true-positive-loc": "src/util.c:133:7"
+    },
+    {
+        "name": "libhtp-17918",
+        "bic-before": "203beeef05f8c7bedd4692b35cf2fbe38c9330b8",
+        "bic-after": "3c6555078ec30e0baa4855ec69d55a22fc8d3589",
+        "sanitizer": "address",
+        "fuzzer": "fuzz_htp",
+        "fuzzer-libs": [
+            "-lz",
+            "-llzma"
+        ],
+        "changed-functions": ["LzmaDec_DecodeToBuf", "LzmaDec_Allocate"],
+        "true-positive": ["LzmaDec_WriteRem", "LzmaDec_DecodeToDic", "LzmaDec_DecodeToBuf"],
+        "true-positive-loc": "htp/lzma/LzmaDec.c:611:21"
+    },
+    {
+        "name": "libxml2-17737",
+        "bic-before": "0762c9b69ba01628f72eada1c64ff3d361fb5716",
+        "bic-after" : "1fbcf4098ba2aefe241de8d7ceb229b995d8daec",
+        "sanitizer": "address",
+        "fuzzer-libs": ["-lz", "-llzma"],
+        "fuzzer": "libxml2_xml_reader_for_file_fuzzer",
+        "changed-functions": ["xmlTextReaderFreeNodeList"],
+        "true-positive": ["xmlTextReaderFreeNodeList", "xmlTextReaderFreeDoc", "xmlFreeTextReader"],
+        "true-positive-loc": "xmlreader.c:371:32"
+    },
+    {
+        "name": "ndpi-49057",
+        "bic-before": "997dce0f04816b4d8440f1cfa924a89e7cee4846",
+        "bic-after": "2edfaeba4ada90ca8771a44132d2b9cc85e45570",
+        "sanitizer": "undefined",
+        "fuzzer": "fuzz_process_packet",
+        "changed-functions": ["ndpi_search_snmp"],
+        "true-positive": ["ndpi_search_snmp"],
+        "true-positive-loc": "src/lib/protocols/snmp_proto.c:77:23"
+    },
+    {
+        "name": "readstat-13262",
+        "bic-before": "d1bfd735515803800cb9708e3fca9e5c1e8e7a48",
+        "bic-after": "1de4f389a8ffb07775cb1d99e33cbfa7e96bccf2",
+        "sanitizer": "address",
+        "fuzzer": "fuzz_format_sas7bdat",
+        "changed-functions": ["sas7bdat_submit_columns"],
+        "true-positive": ["sas_read8"],
+        "true-positive-loc": "src/sas/readstat_sas.c:86:5"
+    },
+    {
+        "name": "yara-38952",
+        "bic-before": "e71801644f73771d8003c14fa3c5237d22319fd0",
+        "bic-after": "5cc28d24a251370218448100de4e9817e0d9233e",
+        "sanitizer": "address",
+        "fuzzer": "pe_fuzzer",
+        "fuzzer-libs": ["-lpthread"],
+        "changed-functions": ["pe_parse_header"],
+        "true-positive": ["pe_get_section_full_name", "pe_parse_header", "pe__load"],
+        "true-positive-loc": "libyara/modules/pe/pe.c:1947:9"
+    }
+]

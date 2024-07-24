@@ -1,0 +1,1 @@
+docker build -t regression-unit-framework/base .
